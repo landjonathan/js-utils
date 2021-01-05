@@ -1,5 +1,5 @@
 /**
- * Sets up a slider, with an optional timer
+ * Sets up a slider, with an optional timer. Must set slide indexes, e.g. <code>data-slide="1"</code>.
  * @description interval can be set, e.g. <code>data-slideshow-timer="1000"</code>. Restart interval can be set, e.g. <code>data-slideshow-timer-restart="1000"</code>.
  * @param {string=} containerIdentifier
  * @param {string=} slideIdentifier
