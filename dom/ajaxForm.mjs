@@ -1,6 +1,7 @@
 /**
  * Sends forms using AJAX POST requests, and displays a <template> message
  * @param {string=} formIdentifier
+ * @param {function(HTMLFormElement): Boolean} validator
  * @param {string=} messageIdentifier
  * @param {string=} successMessageId
  * @param {string=} errorMessageId
@@ -9,9 +10,11 @@
  * @param {function(HTMLFormElement, Response)=} onSuccess
  * @param {function(HTMLFormElement, ErrorEvent, Response)=} onError
  * @param {boolean=} resetOnSuccess
+ * @return {void}
  */
 const ajaxForm = ({
                     formIdentifier = 'data-ajax-form',
+                    validator,
                     messageIdentifier = 'data-message',
                     successMessageId = 'success',
                     errorMessageId = 'error',
@@ -40,6 +43,15 @@ const ajaxForm = ({
     $form.onsubmit = function (event) {
       event.preventDefault()
       if (pending) return
+
+      if (typeof validator === 'function') {
+        const validated = validator($form)
+        if (!validated) {
+          showMessage(errorMessageId)
+          typeof onError === 'function' && onError($form, new ErrorEvent('Validation error'), null)
+          return
+        }
+      }
 
       const headers = new Headers()
       headers.set("Content-Type", "application/x-www-form-urlencoded")
