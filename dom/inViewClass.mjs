@@ -7,6 +7,8 @@
  * @param {number=} threshold
  * @param {boolean=} onLoadFromBottom
  * @param {boolean=} removeWhenOutOfView
+ * @param {string[]=} additionalSelectors
+ * @return {void}
  */
 const inViewClass = (
   {
@@ -15,11 +17,15 @@ const inViewClass = (
     rootMargin = '-1px',
     threshold = .25,
     onLoadFromBottom = true,
-    removeWhenOutOfView = false
+    removeWhenOutOfView = false,
+    additionalSelectors,
   } = {},
 ) => {
   const addClass = $el => $el.classList.add($el.getAttribute(identifier) || defaultClassName)
   const removeClass = $el => $el.classList.remove($el.getAttribute(identifier) || defaultClassName)
+  let selectors = `[${identifier}]`
+  if (additionalSelectors.length)
+    selectors += `,${additionalSelectors.join(',')}`
 
   const observer = new IntersectionObserver(entries =>
     entries.forEach(entry => {
@@ -29,7 +35,7 @@ const inViewClass = (
         removeClass(entry.target)
     }), { rootMargin, threshold })
 
-  document.querySelectorAll(`[${identifier}]`).forEach($el => {
+  document.querySelectorAll(selectors).forEach($el => {
     observer.observe($el)
     if (onLoadFromBottom && $el.getBoundingClientRect().top < 0 ) {
       addClass($el)
