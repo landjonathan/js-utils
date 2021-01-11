@@ -7,7 +7,7 @@
  * @param {number=} threshold
  * @param {boolean=} onLoadFromBottom
  * @param {boolean=} removeWhenOutOfView
- * @param {string[]=} additionalSelectors
+ * @param {string|string[]=} additionalSelectors
  * @return {void}
  */
 const inViewClass = (
@@ -23,9 +23,15 @@ const inViewClass = (
 ) => {
   const addClass = $el => $el.classList.add($el.getAttribute(identifier) || defaultClassName)
   const removeClass = $el => $el.classList.remove($el.getAttribute(identifier) || defaultClassName)
+
   let selectors = `[${identifier}]`
-  if (additionalSelectors.length)
-    selectors += `,${additionalSelectors.join(',')}`
+
+  if (typeof additionalSelectors !== 'undefined') {
+    if (typeof additionalSelectors === 'string')
+      selectors += `,${additionalSelectors}`
+    else if (additionalSelectors.length)
+      selectors += `,${additionalSelectors.join(',')}`
+  }
 
   const observer = new IntersectionObserver(entries =>
     entries.forEach(entry => {
