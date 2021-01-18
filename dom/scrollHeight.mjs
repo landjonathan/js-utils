@@ -11,7 +11,7 @@ const scrollHeight = ({
   const setScrollHeights = () => {
     document.querySelectorAll(`[${identifier}]`).forEach($el => {
       const data = $el.getAttribute(identifier);
-      const source = data ? $el.querySelector(data) : value
+      const source = data ? $el.querySelector(data) : $el
       $el.style.setProperty(variable, source.scrollHeight + 'px')
     })
   }
