@@ -104,7 +104,7 @@ const scrollActiveLabel = ({
     if (window.windowListeners)
       window.windowListeners.scroll.push(setState)
     else
-      window.addEventListener('scroll', setState)
+      window.addEventListener('scroll', setState, { passive: true })
   })
 }
 

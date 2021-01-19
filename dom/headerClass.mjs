@@ -46,8 +46,8 @@ const headerClass = ({
     windowListeners.scroll.push(setHeaderClass)
     windowListeners.resize.push(setThreshold)
   } else {
-    window.addEventListener('scroll', setHeaderClass)
-    window.addEventListener('resize', setThreshold)
+    window.addEventListener('scroll', setHeaderClass, { passive: true })
+    window.addEventListener('resize', setThreshold, { passive: true })
   }
   setHeaderClass()
 }

@@ -1,8 +1,9 @@
 /**
  * Initialized listeners and setupFunctions
  * @param {function[]} setupFunctions Functions to run
+ * @param {boolean} listeners
  */
-const initSite = setupFunctions => {
+const initSite = (setupFunctions, listeners = false) => {
 
   const initListeners = () => {
     window.windowListeners = {
@@ -29,7 +30,8 @@ const initSite = setupFunctions => {
       })
     }
   }
-  initListeners()
+  if (listeners)
+    initListeners()
 
   setupFunctions.forEach(fn => {
     fn()

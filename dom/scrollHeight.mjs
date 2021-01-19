@@ -21,7 +21,7 @@ const scrollHeight = ({
   if (window.windowListeners)
     window.windowListeners.resize.push(setScrollHeights)
   else
-    window.addEventListener('resize', setScrollHeights)
+    window.addEventListener('resize', setScrollHeights, { passive: true })
 }
 
 export default scrollHeight

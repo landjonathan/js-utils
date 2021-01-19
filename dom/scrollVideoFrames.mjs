@@ -142,8 +142,8 @@ const scrollVideoFrames = ({
       windowListeners.scroll.push(setFrame)
       windowListeners.resize.push(onResize)
     } else {
-      window.addEventListener('scroll', setFrame)
-      window.addEventListener('resize', onResize)
+      window.addEventListener('scroll', setFrame, { passive: true })
+      window.addEventListener('resize', onResize, { passive: true })
     }
 
     document.addEventListener('load', setFrame)
