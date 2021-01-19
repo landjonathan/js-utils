@@ -3,7 +3,7 @@
  * @param {function[]} setupFunctions Functions to run
  * @param {boolean} listeners
  */
-const initSite = (setupFunctions, listeners = false) => {
+const initSite = (setupFunctions, listeners = true) => {
 
   const initListeners = () => {
     window.windowListeners = {
