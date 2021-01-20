@@ -12,7 +12,7 @@
  * @param {number|null=} restartTimerInterval
  * @param {string=} restartTimerIntervalIdentifier
  * @param {boolean=} removePrevAndNextClassesOnStop
- * @param {function(number, Node, Node, Node)=} onChange
+ * @param {function(number, Element, Element, Element)=} onChange
  */
 const slideshow = ({
                      containerIdentifier = 'data-slideshow',
