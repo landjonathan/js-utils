@@ -34,7 +34,7 @@ const slideshow = ({
   $containers.forEach($container => {
     const $slides = $container.querySelectorAll(`[${slideIdentifier}]`)
     const $controls = $container.querySelectorAll(`[${controlIdentifier}]`)
-    const max = $slides.length
+    const max = Math.max(...[...$slides].map($slide => parseInt($slide.getAttribute(slideIdentifier)))) || $slides.length
     let timer
 
     interval = interval
