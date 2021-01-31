@@ -27,13 +27,16 @@ const scrollHeight = ({
             case 'shortest': height = Math.min(...heights); break
           }
         } else {
-          height = $el.querySelector(childSelector).scrollHeight
+          const $element = $el.querySelector(childSelector)
+          if ($element)
+            height = $element.scrollHeight
         }
       } else {
         height = $el.scrollHeight
       }
 
-      $el.style.setProperty(variable, height + 'px')
+      if (height)
+        $el.style.setProperty(variable, height + 'px')
     })
   }
   // after fonts and images loaded
