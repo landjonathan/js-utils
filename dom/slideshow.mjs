@@ -50,8 +50,8 @@ const slideshow = ({
     const next = () => index === max ? 1 : index + 1
     const prev = () => index === 1 ? max : index - 1
 
-    const setElementState = $el => {
-      const elIndex = parseInt($el.getAttribute(slideIdentifier))
+    const setElementState = ($el, identifier) => {
+      const elIndex = parseInt($el.getAttribute(identifier))
       $el.classList.toggle(activeClass, elIndex === index)
       nextClass && $el.classList.toggle(nextClass, elIndex === next())
       prevClass && $el.classList.toggle(prevClass, elIndex === prev())
@@ -64,11 +64,11 @@ const slideshow = ({
       index = newIndex || next()
       
       $slides.forEach($slide => {
-        setElementState($slide)
+        setElementState($slide, slideIdentifier)
       })
 
       $controls.forEach($control => {
-        setElementState($control)
+        setElementState($control, controlIdentifier)
       })
 
       if (removePrevAndNextClassesOnStop && !timer) {
