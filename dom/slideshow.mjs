@@ -109,7 +109,7 @@ const slideshow = ({
       })
     })
 
-    setState()
+    setState(index)
   })
 }
 
