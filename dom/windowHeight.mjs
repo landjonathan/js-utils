@@ -1,5 +1,5 @@
 /**
- * Sets a custom property with the Windoe height + the initial property
+ * Sets a custom property with the Window height + the initial property
  * @param {string=} initialVariable
  * @param {string=} variable
  */
@@ -13,7 +13,10 @@ const windowHeight = ({
   const setState = () => setTimeout(() => document.documentElement.style.setProperty(variable, document.documentElement.clientHeight + 'px'), 75)
   setState()
 
-  window.windowListeners.resize.push(setState)
+  if (window.windowListeners)
+    window.windowListeners.resize.push(setState)
+  else
+    window.addEventListener('resize', setState)
 
   // handle orientation change on iPad
   const userAgent = navigator.userAgent.toLowerCase()
