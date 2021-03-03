@@ -37,11 +37,11 @@ const slideshow = ({
     const max = Math.max(...[...$slides].map($slide => parseInt($slide.getAttribute(slideIdentifier)))) || $slides.length
     let timer
 
-    interval = interval
+    const interval = interval
       || parseInt($container.getAttribute(intervalIdentifier))
       || null
 
-    restartTimerInterval = restartTimerInterval
+    const restartTimerInterval = restartTimerInterval
       || parseInt($container.getAttribute(restartTimerIntervalIdentifier))
       || null
 
