@@ -6,6 +6,12 @@
 export const capitalize = string => string.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
 
 /**
+ * @param {string} string
+ * @returns {string}
+ */
+export const capitalizeFirstLetter = string => string.trim().toLowerCase().replace(/\w\S*/, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+
+/**
  * {@link https://1loc.dev/#convert-camel-case-to-kebab-case-and-vice-versa}
  * @param {string} string
  * @returns {string}
