@@ -12,6 +12,7 @@
  * @param {number|null=} restartTimerInterval
  * @param {string=} restartTimerIntervalIdentifier
  * @param {boolean=} removePrevAndNextClassesOnStop
+ * @param {string[]} triggerEvents
  * @param {function(number, Element, Element, Element)=} onChange
  */
 const slideshow = ({
@@ -26,6 +27,7 @@ const slideshow = ({
                      restartTimerInterval = null,
                      restartTimerIntervalIdentifier = 'data-slideshow-timer-restart',
                      removePrevAndNextClassesOnStop = false,
+                     triggerEvents = ['click'],
                      onChange
                    } = {}) => {
   const $containers = document.querySelectorAll(`[${containerIdentifier}]`)
@@ -53,11 +55,14 @@ const slideshow = ({
     const setElementState = ($el, identifier) => {
       const elIndex = parseInt($el.getAttribute(identifier))
       $el.classList.toggle(activeClass, elIndex === index)
-      nextClass && $el.classList.toggle(nextClass, elIndex === next())
-      prevClass && $el.classList.toggle(prevClass, elIndex === prev())
-      const relativeIndex = elIndex - index >= 0 ? elIndex - index : max + elIndex - index
-      $el.dataset.activeIn = `${relativeIndex}`
-      $el.dataset.activeAgo = `${relativeIndex === 0 ? 0 : max - relativeIndex}`
+
+      if (interval) {
+        nextClass && $el.classList.toggle(nextClass, elIndex === next())
+        prevClass && $el.classList.toggle(prevClass, elIndex === prev())
+        const relativeIndex = elIndex - index >= 0 ? elIndex - index : max + elIndex - index
+        $el.dataset.activeIn = `${relativeIndex}`
+        $el.dataset.activeAgo = `${relativeIndex === 0 ? 0 : max - relativeIndex}`
+      }
     }
     
     const setState = newIndex => {
@@ -101,11 +106,14 @@ const slideshow = ({
     setTimer()
 
     $controls.forEach($control => {
-      $control.addEventListener('click', () => {
+      const listener = () => {
         if (timer) {
           unsetTimer()
         }
         setState(parseInt($control.getAttribute(controlIdentifier)))
+      }
+      triggerEvents.forEach(eventName => {
+        $control.addEventListener(eventName, listener)
       })
     })
 
