@@ -14,6 +14,7 @@
  * @param {boolean=} removePrevAndNextClassesOnStop
  * @param {string[]} triggerEvents
  * @param {function(number, Element, Element, Element)=} onChange
+ * @param {function(number, Element, Element, Element)=} beforeInit
  */
 const slideshow = ({
                      containerIdentifier = 'data-slideshow',
@@ -28,7 +29,8 @@ const slideshow = ({
                      restartTimerIntervalIdentifier = 'data-slideshow-timer-restart',
                      removePrevAndNextClassesOnStop = false,
                      triggerEvents = ['click'],
-                     onChange
+                     onChange,
+                     beforeInit,
                    } = {}) => {
   const $containers = document.querySelectorAll(`[${containerIdentifier}]`)
   if (!$containers) return
@@ -48,6 +50,7 @@ const slideshow = ({
       || null
 
     let index = [...$slides].findIndex($slide => $slide.classList.contains(activeClass))
+    if (index === -1) index = 0
 
     const next = () => index === max ? 1 : index + 1
     const prev = () => index === 1 ? max : index - 1
@@ -117,6 +120,7 @@ const slideshow = ({
       })
     })
 
+    typeof beforeInit === 'function' && beforeInit(index, $slides, $controls, $container)
     setState(index)
   })
 }
