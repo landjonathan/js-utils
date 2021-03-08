@@ -8,6 +8,7 @@
  * @param {boolean=} onLoadFromBottom
  * @param {boolean=} removeWhenOutOfView
  * @param {string|string[]=} additionalSelectors
+ * @param {function(Element)=} onIntersecting
  * @return {void}
  */
 const inViewClass = (
@@ -19,6 +20,7 @@ const inViewClass = (
     onLoadFromBottom = true,
     removeWhenOutOfView = false,
     additionalSelectors,
+    onIntersecting
   } = {},
 ) => {
   const addClass = $el => $el.classList.add($el.getAttribute(identifier) || defaultClassName)
@@ -35,8 +37,10 @@ const inViewClass = (
 
   const observer = new IntersectionObserver(entries =>
     entries.forEach(entry => {
-      if (entry.isIntersecting)
+      if (entry.isIntersecting) {
         addClass(entry.target)
+        typeof onIntersecting === 'function' && onIntersecting(entry.target)
+      }
       else if (removeWhenOutOfView)
         removeClass(entry.target)
     }), { rootMargin, threshold })
