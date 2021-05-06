@@ -7,6 +7,8 @@
  * @param {string=} eventIdentifier
  * @param {string=} namespace
  * @param {Storage=} storage
+ * @param {string[]=} defaultProperties
+ * @param {string[]=} defaultEvents
  * @return {void}
  */
 const storeElementProperty = ({
@@ -15,14 +17,16 @@ const storeElementProperty = ({
                                 eventIdentifier = 'data-store-property-event',
                                 namespace = 'elements',
                                 storage = localStorage,
+                                defaultProperties = ['value'],
+                                defaultEvents = ['input'],
                               } = {}) => {
   const $elements = document.querySelectorAll(`[${elementIdentifier}]`)
   if (!$elements) return
 
   $elements.forEach($element => {
     const id = $element.getAttribute(elementIdentifier) || $element.id
-    const propertyNames = $element.getAttribute(valueIdentifier).split(',')
-    const eventNames = $element.getAttribute(eventIdentifier).split(',')
+    const propertyNames = $element.getAttribute(valueIdentifier)?.split(',') ?? defaultProperties
+    const eventNames = $element.getAttribute(eventIdentifier)?.split(',') ?? defaultEvents
     const name = $element.name
 
     eventNames.forEach(eventName => {
