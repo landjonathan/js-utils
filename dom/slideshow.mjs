@@ -86,6 +86,8 @@ const slideshow = ({
         })
       }
 
+      $container.dataset.currentSlide = index
+
       typeof onChange === 'function' && onChange(index, $slides[index - 1], $controls[index - 1], $container)
     }
 
