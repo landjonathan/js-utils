@@ -7,6 +7,7 @@
  * @param {number=} thresholdOffset
  * @param {boolean=} thresholdBottom
  * @param {boolean=} afterThreshold
+ * @param {function=} onChangeClass
  */
 const headerClass = ({
                        headerIdentifier = 'data-site-header',
@@ -15,7 +16,8 @@ const headerClass = ({
                        thresholdIdentifier = 'data-site-header-threshold',
                        thresholdOffset = 0,
                        thresholdBottom = false,
-                       afterThreshold = false
+                       afterThreshold = false,
+                       onChangeClass,
                      } = {}) => {
   let $siteHeader = document.querySelector(`[${headerIdentifier}]`)
   if (!$siteHeader) return
@@ -40,7 +42,10 @@ const headerClass = ({
   setThreshold()
   const setHeaderClass = () => {
     const force = toggleAdd ? window.scrollY >= threshold : window.scrollY <= threshold
+    const currentClassListValue = $siteHeader.classList.value
     $siteHeader.classList.toggle(toggleClass, force)
+    if (currentClassListValue !== $siteHeader.classList.value)
+      typeof onChangeClass === 'function' && onChangeClass()
   }
   if (window.windowListeners) {
     windowListeners.scroll.push(setHeaderClass)
